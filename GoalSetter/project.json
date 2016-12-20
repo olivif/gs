@@ -48,7 +48,8 @@
     "StyleCop.Analyzers": {
       "version": "1.0.0",
       "type": "build"
-    }
+    },
+    "Microsoft.AspNetCore.Authentication.MicrosoftAccount": "1.1.0"
   },
 
   "tools": {
