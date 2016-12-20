@@ -11,6 +11,12 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GoalSetter", "src\GoalSette
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GoalSetter.Tests", "test\GoalSetter.Tests\GoalSetter.Tests.xproj", "{6A59F8C2-AEFC-4DD6-821C-097E94AADF10}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{E719970C-3976-4135-ACBC-33870BD87752}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		global.json = global.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
