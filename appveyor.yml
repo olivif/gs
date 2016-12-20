@@ -10,5 +10,7 @@ before_build:
 
 build_script:
 - cmd: >-
-    dotnet pack src\GoalSetter --configuration Release --output "artifacts\bin\src\GoalSetter"
-    dotnet pack test\GoalSetter.Tests --configuration Release --output "artifacts\bin\test\GoalSetter.Tests"
+    dotnet pack src\GoalSetter --configuration Release --output "artifacts\bin\GoalSetter"
+
+test_script:
+- tests\CodeCoverage\CodeCoverage.cmd
