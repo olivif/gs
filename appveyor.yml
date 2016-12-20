@@ -1,0 +1,13 @@
+version: 1.0.0.{build}
+os: Visual Studio 2015
+
+init:
+- ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
+
+before_build:
+- cmd: >-
+    dotnet restore GoalSetter
+
+build_script:
+- cmd: >-
+    dotnet pack GoalSetter --configuration Release --output "artifacts\bin\GoalSetter"
