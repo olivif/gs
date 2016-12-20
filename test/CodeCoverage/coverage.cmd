@@ -1,6 +1,6 @@
 @echo off
 
-cd tests\CodeCoverage
+cd test\CodeCoverage
 
 nuget restore packages.config -PackagesDirectory .
 
@@ -12,7 +12,7 @@ cd ..
 cd ..
 
 rem The -threshold options prevents this taking ages...
-tests\CodeCoverage\OpenCover.4.6.519\tools\OpenCover.Console.exe -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test tests\GoalSetter.Tests -c Release -f net451" -threshold:10 -register:user -filter:"+[GoalSetter*]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -returntargetcode -output:.\GoalSetter.Coverage.xml
+test\CodeCoverage\OpenCover.4.6.519\tools\OpenCover.Console.exe -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test test\GoalSetter.Tests -c Release -f net451" -threshold:10 -register:user -filter:"+[GoalSetter*]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -returntargetcode -output:.\GoalSetter.Coverage.xml
 
 if %errorlevel% neq 0 exit /b %errorlevel%
 
