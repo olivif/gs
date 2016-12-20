@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GoalSetter", "GoalSetter\GoalSetter.xproj", "{9CF1D302-B3FF-48D9-9B00-3A0AB793A861}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C9E62F16-1739-4D21-AAD7-4D6AA36A2443}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8A86DD41-1EEA-4916-9306-C82ECE9EB11F}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GoalSetter", "src\GoalSetter\GoalSetter.xproj", "{9CF1D302-B3FF-48D9-9B00-3A0AB793A861}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GoalSetter.Tests", "test\GoalSetter.Tests\GoalSetter.Tests.xproj", "{6A59F8C2-AEFC-4DD6-821C-097E94AADF10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +21,16 @@ Global
 		{9CF1D302-B3FF-48D9-9B00-3A0AB793A861}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CF1D302-B3FF-48D9-9B00-3A0AB793A861}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CF1D302-B3FF-48D9-9B00-3A0AB793A861}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A59F8C2-AEFC-4DD6-821C-097E94AADF10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A59F8C2-AEFC-4DD6-821C-097E94AADF10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A59F8C2-AEFC-4DD6-821C-097E94AADF10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A59F8C2-AEFC-4DD6-821C-097E94AADF10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9CF1D302-B3FF-48D9-9B00-3A0AB793A861} = {C9E62F16-1739-4D21-AAD7-4D6AA36A2443}
+		{6A59F8C2-AEFC-4DD6-821C-097E94AADF10} = {8A86DD41-1EEA-4916-9306-C82ECE9EB11F}
 	EndGlobalSection
 EndGlobal

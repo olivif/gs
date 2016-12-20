@@ -6,8 +6,9 @@ init:
 
 before_build:
 - cmd: >-
-    dotnet restore GoalSetter
+    dotnet restore src\GoalSetter
 
 build_script:
 - cmd: >-
-    dotnet pack GoalSetter --configuration Release --output "artifacts\bin\GoalSetter"
+    dotnet pack src\GoalSetter --configuration Release --output "artifacts\bin\src\GoalSetter"
+    dotnet pack test\GoalSetter.Tests --configuration Release --output "artifacts\bin\test\GoalSetter.Tests"
