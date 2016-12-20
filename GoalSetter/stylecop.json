@@ -1,0 +1,12 @@
+﻿{
+  "settings": {
+    "documentationRules": {
+      "companyName": "olivif",
+      "copyrightText": "Copyright (c) {companyName} 2016",
+      "variables": {
+        "licenseName": "MIT",
+        "licenseFile": "LICENSE"
+      }
+    }
+  }
+}
