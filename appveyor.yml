@@ -13,4 +13,4 @@ build_script:
     dotnet pack src\GoalSetter --configuration Release --output "artifacts\bin\GoalSetter"
 
 test_script:
-- tests\CodeCoverage\CodeCoverage.cmd
+- tests\CodeCoverage\coverage.cmd
