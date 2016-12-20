@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using GoalSetter.Data;
 using GoalSetter.Models;
 using GoalSetter.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GoalSetter
 {
@@ -52,7 +53,11 @@ namespace GoalSetter
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.SslPort = 44321;
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
