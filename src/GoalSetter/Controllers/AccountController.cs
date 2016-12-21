@@ -1,4 +1,4 @@
-﻿// <copyright file="AccountController.cs" company="olivif">
+﻿// <copyright file=".cs" company="olivif">
 // Copyright (c) olivif 2016
 // </copyright>
 
