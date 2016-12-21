@@ -1,14 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
+﻿// <copyright file="Program.cs" company="olivif">
+// Copyright (c) olivif 2016
+// </copyright>
 
 namespace GoalSetter
 {
+    using System.IO;
+    using Microsoft.AspNetCore.Hosting;
+
+    /// <summary>
+    /// Program start
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Main
+        /// </summary>
+        /// <param name="args">The program arguments</param>
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()

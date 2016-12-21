@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿// <copyright file="ApplicationUser.cs" company="olivif">
+// Copyright (c) olivif 2016
+// </copyright>
 
 namespace GoalSetter.Models
 {
-    // Add profile data for application users by adding properties to the ApplicationUser class
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+    /// <summary>
+    /// The user object
+    /// </summary>
+    /// <remarks>
+    /// Add profile data for application users by adding properties to the ApplicationUser class
+    /// </remarks>
     public class ApplicationUser : IdentityUser
     {
     }
