@@ -1,4 +1,8 @@
-﻿namespace GoalSetter.Data.Migrations
+﻿// <copyright file="ApplicationDbContextModelSnapshot.cs" company="olivif">
+// Copyright (c) olivif 2016
+// </copyright>
+
+namespace GoalSetter.Data.Migrations
 {
     using System;
     using Microsoft.EntityFrameworkCore;

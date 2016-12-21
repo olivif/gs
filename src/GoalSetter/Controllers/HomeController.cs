@@ -1,4 +1,8 @@
-﻿namespace GoalSetter.Controllers
+﻿// <copyright file="HomeController.cs" company="olivif">
+// Copyright (c) olivif 2016
+// </copyright>
+
+namespace GoalSetter.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
 

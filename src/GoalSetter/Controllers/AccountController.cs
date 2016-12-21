@@ -1,4 +1,8 @@
-﻿namespace GoalSetter.Controllers
+﻿// <copyright file="AccountController.cs" company="olivif">
+// Copyright (c) olivif 2016
+// </copyright>
+
+namespace GoalSetter.Controllers
 {
     using System.Security.Claims;
     using System.Threading.Tasks;
