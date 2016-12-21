@@ -1,4 +1,7 @@
-﻿namespace GoalSetter.Data
+﻿// <copyright file="ApplicationDbContext.cs" company="olivif">
+// Copyright (c) olivif 2016
+// </copyright>
+namespace GoalSetter.Data
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
