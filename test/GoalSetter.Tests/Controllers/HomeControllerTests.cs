@@ -24,5 +24,11 @@
             // Act
             var actionResult = controller.Error();
         }
+
+        [Fact]
+        public void Fail()
+        {
+            Assert.True(false);
+        }
     }
 }
