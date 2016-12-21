@@ -43,8 +43,8 @@ namespace GoalSetter.Controllers
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            this.ViewData["ReturnUrl"] = returnUrl;
+            return this.View();
         }
 
         //
@@ -54,8 +54,8 @@ namespace GoalSetter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            if (ModelState.IsValid)
+            this.ViewData["ReturnUrl"] = returnUrl;
+            if (this.ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
@@ -72,17 +72,17 @@ namespace GoalSetter.Controllers
                 if (result.IsLockedOut)
                 {
                     this.logger.LogWarning(2, "User account locked out.");
-                    return View("Lockout");
+                    return this.View("Lockout");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(model);
+                    this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return this.View(model);
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return this.View(model);
         }
 
         //
@@ -91,8 +91,8 @@ namespace GoalSetter.Controllers
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            this.ViewData["ReturnUrl"] = returnUrl;
+            return this.View();
         }
 
         //
@@ -102,8 +102,8 @@ namespace GoalSetter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            if (ModelState.IsValid)
+            this.ViewData["ReturnUrl"] = returnUrl;
+            if (this.ModelState.IsValid)
             {
                 var user = new ApplicationUser
                 {
@@ -128,7 +128,7 @@ namespace GoalSetter.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return this.View(model);
         }
 
         //
@@ -163,8 +163,8 @@ namespace GoalSetter.Controllers
         {
             if (remoteError != null)
             {
-                ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
-                return View(nameof(Login));
+                this.ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+                return this.View(nameof(Login));
             }
             var info = await this.signInManager.GetExternalLoginInfoAsync();
             if (info == null)
@@ -185,15 +185,15 @@ namespace GoalSetter.Controllers
             }
             if (result.IsLockedOut)
             {
-                return View("Lockout");
+                return this.View("Lockout");
             }
             else
             {
                 // If the user does not have an account, then ask the user to create an account.
-                ViewData["ReturnUrl"] = returnUrl;
-                ViewData["LoginProvider"] = info.LoginProvider;
+                this.ViewData["ReturnUrl"] = returnUrl;
+                this.ViewData["LoginProvider"] = info.LoginProvider;
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+                return this.View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
             }
         }
 
@@ -204,13 +204,13 @@ namespace GoalSetter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
                 var info = await this.signInManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
-                    return View("ExternalLoginFailure");
+                    return this.View("ExternalLoginFailure");
                 }
                 var user = new ApplicationUser
                 {
@@ -231,8 +231,8 @@ namespace GoalSetter.Controllers
                 AddErrors(result);
             }
 
-            ViewData["ReturnUrl"] = returnUrl;
-            return View(model);
+            this.ViewData["ReturnUrl"] = returnUrl;
+            return this.View(model);
         }
 
         // GET: /Account/ConfirmEmail
@@ -242,15 +242,15 @@ namespace GoalSetter.Controllers
         {
             if (userId == null || code == null)
             {
-                return View("Error");
+                return this.View("Error");
             }
             var user = await this.userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return View("Error");
+                return this.View("Error");
             }
             var result = await this.userManager.ConfirmEmailAsync(user, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            return this.View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
         //
@@ -259,7 +259,7 @@ namespace GoalSetter.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-            return View();
+            return this.View();
         }
 
         //
@@ -269,13 +269,13 @@ namespace GoalSetter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
                 var user = await this.userManager.FindByNameAsync(model.Email);
                 if (user == null || !(await this.userManager.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    return this.View("ForgotPasswordConfirmation");
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
@@ -284,11 +284,11 @@ namespace GoalSetter.Controllers
                 //var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                 //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
                 //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
-                //return View("ForgotPasswordConfirmation");
+                //return this.View("ForgotPasswordConfirmation");
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return this.View(model);
         }
 
         //
@@ -297,7 +297,7 @@ namespace GoalSetter.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
-            return View();
+            return this.View();
         }
 
         //
@@ -306,7 +306,7 @@ namespace GoalSetter.Controllers
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
         {
-            return code == null ? View("Error") : View();
+            return code == null ? this.View("Error") : this.View();
         }
 
         //
@@ -316,9 +316,9 @@ namespace GoalSetter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return View(model);
+                return this.View(model);
             }
             var user = await this.userManager.FindByNameAsync(model.Email);
             if (user == null)
@@ -332,7 +332,7 @@ namespace GoalSetter.Controllers
                 return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
             }
             AddErrors(result);
-            return View();
+            return this.View();
         }
 
         //
@@ -341,7 +341,7 @@ namespace GoalSetter.Controllers
         [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()
         {
-            return View();
+            return this.View();
         }
 
         //
@@ -353,11 +353,11 @@ namespace GoalSetter.Controllers
             var user = await this.signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return this.View("Error");
             }
             var userFactors = await this.userManager.GetValidTwoFactorProvidersAsync(user);
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            return this.View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
         //
@@ -367,22 +367,22 @@ namespace GoalSetter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendCode(SendCodeViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return View();
+                return this.View();
             }
 
             var user = await this.signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return this.View("Error");
             }
 
             // Generate the token and send it
             var code = await this.userManager.GenerateTwoFactorTokenAsync(user, model.SelectedProvider);
             if (string.IsNullOrWhiteSpace(code))
             {
-                return View("Error");
+                return this.View("Error");
             }
 
             var message = "Your security code is: " + code;
@@ -408,9 +408,9 @@ namespace GoalSetter.Controllers
             var user = await this.signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return this.View("Error");
             }
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            return this.View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
         //
@@ -420,9 +420,9 @@ namespace GoalSetter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VerifyCode(VerifyCodeViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return View(model);
+                return this.View(model);
             }
 
             // The following code protects for brute force attacks against the two factor codes.
@@ -436,12 +436,12 @@ namespace GoalSetter.Controllers
             if (result.IsLockedOut)
             {
                 logger.LogWarning(7, "User account locked out.");
-                return View("Lockout");
+                return this.View("Lockout");
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Invalid code.");
-                return View(model);
+                this.ModelState.AddModelError(string.Empty, "Invalid code.");
+                return this.View(model);
             }
         }
 
@@ -451,7 +451,7 @@ namespace GoalSetter.Controllers
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(string.Empty, error.Description);
+                this.ModelState.AddModelError(string.Empty, error.Description);
             }
         }
 

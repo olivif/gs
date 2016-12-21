@@ -72,7 +72,7 @@ namespace GoalSetter.Controllers
         public async Task<IActionResult> RemoveLogin(RemoveLoginViewModel account)
         {
             ManageMessageId? message = ManageMessageId.Error;
-            var user = await GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync();
             if (user != null)
             {
                 var result = await this.userManager.RemoveLoginAsync(user, account.LoginProvider, account.ProviderKey);
@@ -82,14 +82,14 @@ namespace GoalSetter.Controllers
                     message = ManageMessageId.RemoveLoginSuccess;
                 }
             }
-            return RedirectToAction(nameof(ManageLogins), new { Message = message });
+            return this.RedirectToAction(nameof(ManageLogins), new { Message = message });
         }
 
         //
         // GET: /Manage/AddPhoneNumber
         public IActionResult AddPhoneNumber()
         {
-            return View();
+            return this.View();
         }
 
         //
@@ -100,16 +100,16 @@ namespace GoalSetter.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return this.View(model);
             }
             // Generate the token and send it
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return this.View("Error");
             }
             var code = await this.userManager.GenerateChangePhoneNumberTokenAsync(user, model.PhoneNumber);
-            await smsSender.SendSmsAsync(model.PhoneNumber, "Your security code is: " + code);
+            await this.smsSender.SendSmsAsync(model.PhoneNumber, "Your security code is: " + code);
             return RedirectToAction(nameof(VerifyPhoneNumber), new { PhoneNumber = model.PhoneNumber });
         }
 
@@ -119,14 +119,14 @@ namespace GoalSetter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EnableTwoFactorAuthentication()
         {
-            var user = await GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync();
             if (user != null)
             {
                 await this.userManager.SetTwoFactorEnabledAsync(user, true);
                 await this.signInManager.SignInAsync(user, isPersistent: false);
                 logger.LogInformation(1, "User enabled two-factor authentication.");
             }
-            return RedirectToAction(nameof(Index), "Manage");
+            return this.RedirectToAction(nameof(Index), "Manage");
         }
 
         //
@@ -135,14 +135,14 @@ namespace GoalSetter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DisableTwoFactorAuthentication()
         {
-            var user = await GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync();
             if (user != null)
             {
                 await this.userManager.SetTwoFactorEnabledAsync(user, false);
                 await this.signInManager.SignInAsync(user, isPersistent: false);
                 logger.LogInformation(2, "User disabled two-factor authentication.");
             }
-            return RedirectToAction(nameof(Index), "Manage");
+            return this.RedirectToAction(nameof(Index), "Manage");
         }
 
         //
@@ -150,7 +150,7 @@ namespace GoalSetter.Controllers
         [HttpGet]
         public async Task<IActionResult> VerifyPhoneNumber(string phoneNumber)
         {
-            var user = await GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync();
             if (user == null)
             {
                 return View("Error");
@@ -170,7 +170,7 @@ namespace GoalSetter.Controllers
             {
                 return View(model);
             }
-            var user = await GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync();
             if (user != null)
             {
                 var result = await this.userManager.ChangePhoneNumberAsync(user, model.PhoneNumber, model.Code);
@@ -191,7 +191,7 @@ namespace GoalSetter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemovePhoneNumber()
         {
-            var user = await GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync();
             if (user != null)
             {
                 var result = await this.userManager.SetPhoneNumberAsync(user, null);
@@ -222,7 +222,7 @@ namespace GoalSetter.Controllers
             {
                 return View(model);
             }
-            var user = await GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync();
             if (user != null)
             {
                 var result = await this.userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
@@ -257,7 +257,7 @@ namespace GoalSetter.Controllers
                 return View(model);
             }
 
-            var user = await GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync();
             if (user != null)
             {
                 var result = await this.userManager.AddPasswordAsync(user, model.NewPassword);
@@ -281,7 +281,7 @@ namespace GoalSetter.Controllers
                 : message == ManageMessageId.AddLoginSuccess ? "The external login was added."
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
-            var user = await GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync();
             if (user == null)
             {
                 return View("Error");
@@ -313,7 +313,7 @@ namespace GoalSetter.Controllers
         [HttpGet]
         public async Task<ActionResult> LinkLoginCallback()
         {
-            var user = await GetCurrentUserAsync();
+            var user = await this.GetCurrentUserAsync();
             if (user == null)
             {
                 return View("Error");
