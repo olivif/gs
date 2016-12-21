@@ -4,22 +4,28 @@
 
 namespace GoalSetter
 {
+    using Data;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using GoalSetter.Data;
-    using GoalSetter.Models;
-    using Microsoft.AspNetCore.Mvc;
+
+    using Models;
 
     /// <summary>
     /// Start up
     /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// </summary>
+        /// <param name="env">The hostin genvironment</param>
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -40,9 +46,18 @@ namespace GoalSetter
             this.Configuration = builder.Build();
         }
 
+        /// <summary>
+        /// Gets the configuration
+        /// </summary>
         public IConfigurationRoot Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// Configure services
+        /// </summary>
+        /// <remarks>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </remarks>
+        /// <param name="services">The services</param>
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
@@ -64,7 +79,15 @@ namespace GoalSetter
             // Add application services.
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// Configure
+        /// </summary>
+        /// <remarks>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </remarks>
+        /// <param name="app">The app</param>
+        /// <param name="env">The hosting environment</param>
+        /// <param name="loggerFactory">The logger factory</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
@@ -96,7 +119,6 @@ namespace GoalSetter
             });
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
