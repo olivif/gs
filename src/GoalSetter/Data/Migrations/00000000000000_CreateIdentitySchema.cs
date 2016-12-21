@@ -7,7 +7,7 @@ namespace GoalSetter.Data.Migrations
     using System.Diagnostics.CodeAnalysis;
     using Microsoft.EntityFrameworkCore.Metadata;
     using Microsoft.EntityFrameworkCore.Migrations;
-    
+
     [SuppressMessage("StyleCop.Analyzers", "*")]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "*")]
     public partial class CreateIdentitySchema : Migration
