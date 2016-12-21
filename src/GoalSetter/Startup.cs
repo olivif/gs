@@ -44,10 +44,10 @@ namespace GoalSetter
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddApplicationInsightsTelemetry(Configuration);
+            services.AddApplicationInsightsTelemetry(this.Configuration);
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -67,7 +67,7 @@ namespace GoalSetter
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             app.UseApplicationInsightsRequestTelemetry();
@@ -91,8 +91,8 @@ namespace GoalSetter
 
             app.UseMicrosoftAccountAuthentication(new MicrosoftAccountOptions()
             {
-                ClientId = Configuration["Authentication:Microsoft:ClientId"],
-                ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"]
+                ClientId = this.Configuration["Authentication:Microsoft:ClientId"],
+                ClientSecret = this.Configuration["Authentication:Microsoft:ClientSecret"]
             });
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
