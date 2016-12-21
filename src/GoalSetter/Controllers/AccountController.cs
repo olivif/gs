@@ -56,7 +56,7 @@ namespace GoalSetter.Controllers
                 if (result.Succeeded)
                 {
                     this.logger.LogInformation(1, "User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    return this.RedirectToLocal(returnUrl);
                 }
 
                 if (result.IsLockedOut)
@@ -121,7 +121,7 @@ namespace GoalSetter.Controllers
             if (result.Succeeded)
             {
                 logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
-                return RedirectToLocal(returnUrl);
+                return this.RedirectToLocal(returnUrl);
             }
 
             if (result.IsLockedOut)
@@ -166,7 +166,7 @@ namespace GoalSetter.Controllers
                     {
                         await this.signInManager.SignInAsync(user, isPersistent: false);
                         this.logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
-                        return RedirectToLocal(returnUrl);
+                        return this.RedirectToLocal(returnUrl);
                     }
                 }
                 AddErrors(result);
