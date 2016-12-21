@@ -84,6 +84,14 @@
     "xmlDoc": "true"
   },
 
+  "configurations": {
+    "Release": {
+      "buildOptions": {
+        "warningsAsErrors": true
+      }
+    }
+  },
+
   "runtimeOptions": {
     "configProperties": {
       "System.GC.Server": true
