@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Logging;
-using GoalSetter.Models;
-using GoalSetter.Models.AccountViewModels;
-
-namespace GoalSetter.Controllers
+﻿namespace GoalSetter.Controllers
 {
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using GoalSetter.Models;
+    using GoalSetter.Models.AccountViewModels;
+
     [Authorize]
     public class AccountController : Controller
     {
@@ -82,8 +78,8 @@ namespace GoalSetter.Controllers
         public async Task<IActionResult> LogOff()
         {
             await this.signInManager.SignOutAsync();
-            logger.LogInformation(4, "User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            this.logger.LogInformation(4, "User logged out.");
+            return this.RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         //
@@ -113,14 +109,14 @@ namespace GoalSetter.Controllers
             var info = await this.signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
-                return RedirectToAction(nameof(Login));
+                return this.RedirectToAction(nameof(Login));
             }
 
             // Sign in the user with this external login provider if the user already has a login.
             var result = await this.signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
             if (result.Succeeded)
             {
-                logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
+                this.logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
                 return this.RedirectToLocal(returnUrl);
             }
 
@@ -221,7 +217,7 @@ namespace GoalSetter.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return this.RedirectToAction(nameof(HomeController.Index), "Home");
             }
         }
 
