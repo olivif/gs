@@ -12,6 +12,10 @@ namespace GoalSetter
     /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Main
+        /// </summary>
+        /// <param name="args">The program arguments</param>
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()

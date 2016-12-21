@@ -79,7 +79,8 @@
     "emitEntryPoint": true,
     "preserveCompilationContext": true,
     "additionalArguments": [
-      "/additionalfile:stylecop.json"
+      "/additionalfile:stylecop.json",
+      "/additionalfile:../stylecop.ruleset"
     ],
     "xmlDoc": "true"
   },

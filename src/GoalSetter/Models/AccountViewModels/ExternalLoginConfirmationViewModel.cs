@@ -11,6 +11,9 @@ namespace GoalSetter.Models.AccountViewModels
     /// </summary>
     public class ExternalLoginConfirmationViewModel
     {
+        /// <summary>
+        /// Gets or sets the email address
+        /// </summary>
         [Required]
         [EmailAddress]
         public string Email { get; set; }

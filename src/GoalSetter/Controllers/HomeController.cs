@@ -11,11 +11,19 @@ namespace GoalSetter.Controllers
     /// </summary>
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Index
+        /// </summary>
+        /// <returns>The action result</returns>
         public IActionResult Index()
         {
             return this.View();
         }
 
+        /// <summary>
+        /// Error
+        /// </summary>
+        /// <returns>The action result</returns>
         public IActionResult Error()
         {
             return this.View();
