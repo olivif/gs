@@ -15,6 +15,9 @@ namespace GoalSetter
     using GoalSetter.Models;
     using Microsoft.AspNetCore.Mvc;
 
+    /// <summary>
+    /// Start up
+    /// </summary>
     public class Startup
     {
         public Startup(IHostingEnvironment env)

@@ -6,6 +6,9 @@ namespace GoalSetter.Models.AccountViewModels
 {
     using System.ComponentModel.DataAnnotations;
 
+    /// <summary>
+    /// External login view model
+    /// </summary>
     public class ExternalLoginConfirmationViewModel
     {
         [Required]

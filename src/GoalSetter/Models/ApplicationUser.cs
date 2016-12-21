@@ -6,7 +6,12 @@ namespace GoalSetter.Models
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-    // Add profile data for application users by adding properties to the ApplicationUser class
+    /// <summary>
+    /// The user object
+    /// </summary>
+    /// <remarks>
+    /// Add profile data for application users by adding properties to the ApplicationUser class
+    /// </remarks>
     public class ApplicationUser : IdentityUser
     {
     }

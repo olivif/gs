@@ -8,6 +8,9 @@ namespace GoalSetter.Data
     using Microsoft.EntityFrameworkCore;
     using GoalSetter.Models;
 
+    /// <summary>
+    /// Db context
+    /// </summary>
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

@@ -7,6 +7,9 @@ namespace GoalSetter
     using System.IO;
     using Microsoft.AspNetCore.Hosting;
 
+    /// <summary>
+    /// Program start
+    /// </summary>
     public class Program
     {
         public static void Main(string[] args)

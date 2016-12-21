@@ -6,6 +6,9 @@ namespace GoalSetter.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
 
+    /// <summary>
+    /// Home Controller
+    /// </summary>
     public class HomeController : Controller
     {
         public IActionResult Index()

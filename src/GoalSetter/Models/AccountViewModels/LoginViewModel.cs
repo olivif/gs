@@ -6,6 +6,9 @@ namespace GoalSetter.Models.AccountViewModels
 {
     using System.ComponentModel.DataAnnotations;
 
+    /// <summary>
+    /// Login view model
+    /// </summary>
     public class LoginViewModel
     {
         [Required]
