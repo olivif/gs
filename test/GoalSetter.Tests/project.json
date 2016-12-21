@@ -15,12 +15,12 @@
           "version": "1.0.1"
         }
       },
-      "net451": {},
       "imports": [
         "dotnet5.4",
         "portable-net451+win8"
       ]
-    }
+    },
+    "net451": {}
   },
   "testRunner": "xunit",
   "version": "1.0.0-*"
