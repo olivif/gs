@@ -6,13 +6,23 @@
     public class HomeControllerTests
     {
         [Fact]
-        public void Index() 
+        public void CanCallIndex() 
         {
             // Arrange
             var controller = new HomeController();
 
             // Act
-            controller.Index();
+            var actionResult = controller.Index();
+        }
+
+        [Fact]
+        public void CanCallError()
+        {
+            // Arrange
+            var controller = new HomeController();
+
+            // Act
+            var actionResult = controller.Error();
         }
     }
 }
