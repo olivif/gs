@@ -30,11 +30,9 @@ namespace GoalSetter.Controllers
         /// </summary>
         /// <param name="userManager">User manager</param>
         /// <param name="signInManager">Sign in manager</param>
-        /// <param name="loggerFactory">logger factory</param>
         public AccountController(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            ILoggerFactory loggerFactory)
+            SignInManager<ApplicationUser> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
