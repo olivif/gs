@@ -1,6 +1,5 @@
-﻿namespace GoalSetter
+﻿namespace GoalSetter.Controllers
 {
-    using Controllers;
     using Xunit;
 
     public class HomeControllerTests

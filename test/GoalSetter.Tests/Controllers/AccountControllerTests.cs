@@ -1,6 +1,5 @@
 ﻿namespace GoalSetter.Controllers
 {
-    using Controllers;
     using Xunit;
     using Models;
     using Moq;
@@ -12,15 +11,39 @@
 
     public class AccountControllerTests
     {
+        private readonly Mock<UserManager<ApplicationUser>> userManagerMock;
+
+        private readonly Mock<SignInManager<ApplicationUser>> signInManagerMock;
+
+        private readonly AccountController controller;
+
+        public AccountControllerTests()
+        {
+            this.userManagerMock = this.MockUserManager<ApplicationUser>(); ;
+            this.signInManagerMock = this.MockSignInManager<ApplicationUser>(userManagerMock);
+
+            this.controller = new AccountController(
+                this.userManagerMock.Object,
+                this.signInManagerMock.Object);
+        }
+
         [Fact]
         public void Constructor()
         {
-            // Arrange
-            var userManagerMock = this.MockUserManager<ApplicationUser>(); ;
-            var signInManagerMock = this.MockSignInManager<ApplicationUser>(userManagerMock);
-
             // Act
-            new AccountController(userManagerMock.Object,signInManagerMock.Object);
+            new AccountController(
+                this.userManagerMock.Object,
+                this.signInManagerMock.Object);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("someUrl")]
+        public void Login(string returnUrl)
+        {
+            // Act
+            var actionResult = controller.Login(returnUrl);
         }
 
         /// Took this from https://github.com/aspnet/Identity/blob/master/test/Shared/MockHelpers.cs
