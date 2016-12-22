@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Options;
     using Microsoft.AspNetCore.Builder;
+    using Models.AccountViewModels;
 
     public class AccountControllerTests
     {
@@ -44,6 +45,14 @@
         {
             // Act
             var actionResult = controller.Login(returnUrl);
+        }
+
+        [Theory]
+        [InlineData(new LoginViewModel())]
+        public void LoginWithModel(LoginViewModel model, string returnUrl)
+        {
+            // Act
+            var actionResult = controller.Login(model, returnUrl);
         }
 
         /// Took this from https://github.com/aspnet/Identity/blob/master/test/Shared/MockHelpers.cs

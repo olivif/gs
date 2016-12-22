@@ -4,6 +4,7 @@
 
 namespace GoalSetter.Controllers
 {
+    using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -63,6 +64,7 @@ namespace GoalSetter.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             this.ViewData["ReturnUrl"] = returnUrl;
+
             if (this.ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -89,8 +91,8 @@ namespace GoalSetter.Controllers
                 }
             }
 
-            // If we got this far, something failed, redisplay form
-            return this.View(model);
+            // If we got this far, something failed
+            throw new InvalidOperationException();
         }
 
         /// <summary>
