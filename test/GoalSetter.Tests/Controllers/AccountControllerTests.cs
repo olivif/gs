@@ -47,8 +47,6 @@
             var actionResult = controller.Login(returnUrl);
         }
 
-        [Theory]
-        [InlineData(new LoginViewModel())]
         public void LoginWithModel(LoginViewModel model, string returnUrl)
         {
             // Act
