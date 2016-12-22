@@ -48,7 +48,8 @@
       "version": "1.0.0",
       "type": "build"
     },
-    "Microsoft.AspNetCore.Authentication.MicrosoftAccount": "1.1.0"
+    "Microsoft.AspNetCore.Authentication.MicrosoftAccount": "1.1.0",
+    "Argument.Validator":  "1.0.2"
   },
 
   "tools": {
