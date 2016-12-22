@@ -13,7 +13,8 @@
           "type": "platform",
           "version": "1.0.1"
         },
-        "Microsoft.CodeCoverage": "1.0.2"
+        "Microsoft.CodeCoverage": "1.0.2",
+        "moq": "4.6.38-alpha"
       }
     }
   }

@@ -4,6 +4,7 @@
 
 namespace GoalSetter.Controllers
 {
+    using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -22,23 +23,20 @@ namespace GoalSetter.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
+
         private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly ILogger logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountController"/> class.
         /// </summary>
         /// <param name="userManager">User manager</param>
         /// <param name="signInManager">Sign in manager</param>
-        /// <param name="loggerFactory">logger factory</param>
         public AccountController(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            ILoggerFactory loggerFactory)
+            SignInManager<ApplicationUser> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.logger = loggerFactory.CreateLogger<AccountController>();
         }
 
         /// <summary>
@@ -66,6 +64,7 @@ namespace GoalSetter.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             this.ViewData["ReturnUrl"] = returnUrl;
+
             if (this.ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -78,13 +77,11 @@ namespace GoalSetter.Controllers
 
                 if (result.Succeeded)
                 {
-                    this.logger.LogInformation(1, "User logged in.");
                     return this.RedirectToLocal(returnUrl);
                 }
 
                 if (result.IsLockedOut)
                 {
-                    this.logger.LogWarning(2, "User account locked out.");
                     return this.View("Lockout");
                 }
                 else
@@ -94,8 +91,8 @@ namespace GoalSetter.Controllers
                 }
             }
 
-            // If we got this far, something failed, redisplay form
-            return this.View(model);
+            // If we got this far, something failed
+            throw new InvalidOperationException();
         }
 
         /// <summary>
@@ -107,7 +104,6 @@ namespace GoalSetter.Controllers
         public async Task<IActionResult> LogOff()
         {
             await this.signInManager.SignOutAsync();
-            this.logger.LogInformation(4, "User logged out.");
             return this.RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
@@ -162,7 +158,6 @@ namespace GoalSetter.Controllers
 
             if (result.Succeeded)
             {
-                this.logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
                 return this.RedirectToLocal(returnUrl);
             }
 
@@ -216,7 +211,6 @@ namespace GoalSetter.Controllers
                     if (result.Succeeded)
                     {
                         await this.signInManager.SignInAsync(user, isPersistent: false);
-                        this.logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
                         return this.RedirectToLocal(returnUrl);
                     }
                 }
