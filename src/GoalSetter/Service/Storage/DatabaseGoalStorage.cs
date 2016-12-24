@@ -1,4 +1,4 @@
-﻿// <copyright file="IGoalStorage.cs" company="olivif">
+﻿// <copyright file="DatabaseGoalStorage.cs" company="olivif">
 // Copyright (c) olivif 2016
 // </copyright>
 
@@ -25,7 +25,7 @@ namespace GoalSetter.Service.Storage
             this.dbContext = dbContext;
         }
 
-        /// <inheritdoc /> 
+        /// <inheritdoc />
         public Goal Create(Goal goal)
         {
             var addedGoal = this.dbContext.Goals.Add(goal);
@@ -34,7 +34,7 @@ namespace GoalSetter.Service.Storage
             return addedGoal.Entity;
         }
 
-        /// <inheritdoc /> 
+        /// <inheritdoc />
         public IList<Goal> Read(Guid userId)
         {
             var goals = new List<Goal>();

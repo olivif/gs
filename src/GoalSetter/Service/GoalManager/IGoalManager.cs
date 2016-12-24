@@ -4,6 +4,7 @@
 
 namespace GoalSetter.Service.GoalManager
 {
+    using System;
     using System.Collections.Generic;
     using GoalSetter.ModelsLogic;
 
@@ -20,9 +21,10 @@ namespace GoalSetter.Service.GoalManager
         bool Create(Goal goal);
 
         /// <summary>
-        /// Reads all goals for the currently signed in user
+        /// Reads all goals for a given user id
         /// </summary>
+        /// <param name="userId">The id of the user to retreive the goals for</param>
         /// <returns>The list of goals</returns>
-        IList<Goal> Read();
+        IList<Goal> Read(Guid userId);
     }
 }

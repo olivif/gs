@@ -2,25 +2,46 @@
 // Copyright (c) olivif 2016
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using GoalSetter.ModelsLogic;
-
 namespace GoalSetter.Service.GoalManager
 {
+    using System;
+    using System.Collections.Generic;
+    using GoalSetter.ModelsLogic;
+    using Storage;
+
     /// <summary>
     /// GoalManager
     /// </summary>
     public class GoalManager : IGoalManager
     {
-        public bool Create(Goal goal)
+        private readonly IGoalStorage storage;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GoalManager"/> class.
+        /// </summary>
+        /// <param name="storage">Goals storage</param>
+        public GoalManager(IGoalStorage storage)
         {
-            throw new NotImplementedException();
+            this.storage = storage;
         }
 
-        public IList<Goal> Read()
+        /// <inheritdoc />
+        public bool Create(Goal goal)
         {
-            throw new NotImplementedException();
+            var resultGoal = this.storage.Create(goal);
+
+            if (resultGoal != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc />
+        public IList<Goal> Read(Guid userId)
+        {
+            return this.storage.Read(userId);
         }
     }
 }
