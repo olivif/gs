@@ -12,6 +12,7 @@ namespace GoalSetter.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Models;
     using Models.Goals;
+    using ModelsLogic;
 
     /// <summary>
     /// Home Controller
@@ -75,11 +76,15 @@ namespace GoalSetter.Controllers
             var userId = this.userManager.GetUserId(this.User);
             var userIdGuid = Guid.Parse(userId);
 
-            model.UserId = userIdGuid;
-            model.GoalId = Guid.NewGuid();
+            var goal = new Goal()
+            {
+                UserId = userIdGuid,
+                GoalId = Guid.NewGuid(),
+                Data = model.Data
+            };
 
             // Save to db
-            this.goalsDbContext.Goals.Add(model);
+            this.goalsDbContext.Goals.Add(goal);
             this.goalsDbContext.SaveChanges();
 
             return this.View();

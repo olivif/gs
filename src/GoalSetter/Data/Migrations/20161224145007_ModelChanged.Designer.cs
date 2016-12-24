@@ -8,9 +8,10 @@ using GoalSetter.Data;
 namespace GoalSetter.Migrations
 {
     [DbContext(typeof(GoalsDbContext))]
-    partial class GoalsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161224145007_ModelChanged")]
+    partial class ModelChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
