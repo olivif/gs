@@ -10,7 +10,7 @@ namespace GoalSetter.Data
     /// <summary>
     /// Database context for goals data
     /// </summary>
-    public class GoalsDbContext : DbContext
+    public class GoalsDbContext : DbContext, IDbContext
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GoalsDbContext"/> class.
