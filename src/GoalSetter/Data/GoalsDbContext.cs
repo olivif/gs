@@ -25,5 +25,17 @@ namespace GoalSetter.Data
         /// Gets or sets the goals
         /// </summary>
         public DbSet<GoalViewModel> Goals { get; set; }
+
+        /// <summary>
+        /// OnModelCreating
+        /// </summary>
+        /// <param name="builder">The builder</param>
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder
+                .Entity<GoalViewModel>()
+                .HasKey(g => new { g.UserId, g.GoalId });
+        }
     }
 }

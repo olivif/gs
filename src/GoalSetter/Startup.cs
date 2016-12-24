@@ -58,8 +58,12 @@ namespace GoalSetter
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            var connectionString = this.Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(connectionString));
+
+            services.AddDbContext<GoalsDbContext>(options =>
+                options.UseSqlServer(connectionString));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
