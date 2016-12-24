@@ -4,6 +4,7 @@
 
 namespace GoalSetter.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
@@ -25,6 +26,16 @@ namespace GoalSetter.Controllers
         /// </summary>
         /// <returns>The action result</returns>
         public IActionResult Error()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// Data
+        /// </summary>
+        /// <returns>The action result</returns>
+        [Authorize]
+        public IActionResult Data()
         {
             return this.View();
         }
