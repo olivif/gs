@@ -16,7 +16,7 @@ namespace GoalSetter
     using Microsoft.Extensions.Logging;
 
     using Models;
-    using Service.GoalManager;
+    using Service.Manager;
     using Service.Storage;
 
     /// <summary>

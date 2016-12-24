@@ -12,7 +12,7 @@ namespace GoalSetter.Controllers
     using Models;
     using Models.Goals;
     using ModelsLogic;
-    using Service.GoalManager;
+    using Service.Manager;
 
     /// <summary>
     /// Home Controller

@@ -1,4 +1,4 @@
-﻿namespace GoalSetter.Service
+﻿namespace GoalSetter.Service.Storage
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,6 @@
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using ModelsLogic;
     using Moq;
-    using Storage;
     using Xunit;
 
     public class DatabaseGoalStorageTests

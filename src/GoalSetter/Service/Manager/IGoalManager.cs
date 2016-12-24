@@ -2,7 +2,7 @@
 // Copyright (c) olivif 2016
 // </copyright>
 
-namespace GoalSetter.Service.GoalManager
+namespace GoalSetter.Service.Manager
 {
     using System;
     using System.Collections.Generic;
