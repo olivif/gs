@@ -4,15 +4,22 @@
 
 namespace GoalSetter.Models.Goals
 {
+    using System;
+
     /// <summary>
     /// Goal data model
     /// </summary>
     public class Goal
     {
         /// <summary>
-        /// Gets or sets the user id 
+        /// Gets or sets the user id
         /// </summary>
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user id
+        /// </summary>
+        public Guid GoalId { get; set; }
 
         /// <summary>
         /// Gets or sets the goal data
