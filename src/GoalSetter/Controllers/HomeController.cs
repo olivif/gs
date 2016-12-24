@@ -79,7 +79,6 @@ namespace GoalSetter.Controllers
             model.GoalId = Guid.NewGuid();
 
             // Save to db
-            this.goalsDbContext.Database.EnsureCreated();
             this.goalsDbContext.Goals.Add(model);
             this.goalsDbContext.SaveChanges();
 
