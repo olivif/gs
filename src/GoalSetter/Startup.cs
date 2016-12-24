@@ -16,6 +16,8 @@ namespace GoalSetter
     using Microsoft.Extensions.Logging;
 
     using Models;
+    using Service.GoalManager;
+    using Service.Storage;
 
     /// <summary>
     /// Start up
@@ -76,6 +78,8 @@ namespace GoalSetter
             });
 
             // Add application services.
+            services.AddTransient<IGoalStorage, DatabaseGoalStorage>();
+            services.AddTransient<IGoalManager, GoalManager>();
         }
 
         /// <summary>
