@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Models;
     using Moq;
+    using Service.GoalManager;
     using Xunit;
 
     public class HomeControllerTests
@@ -12,6 +13,8 @@
         private readonly Mock<UserManager<ApplicationUser>> userManagerMock;
 
         private readonly GoalsDbContext goalsDbContext;
+
+        private readonly Mock<GoalManager> goalManagerMock;
 
         private readonly HomeController controller;
 
@@ -22,9 +25,12 @@
             var options = new DbContextOptions<GoalsDbContext>();
             this.goalsDbContext = new GoalsDbContext(options);
 
+            this.goalManagerMock = new Mock<GoalManager>();
+
             this.controller = new HomeController(
                 this.userManagerMock.Object,
-                this.goalsDbContext);
+                this.goalsDbContext,
+                this.goalManagerMock.Object);
         }
 
         [Fact]
