@@ -31,5 +31,12 @@
             // Act
             var actionResult = this.controller.Error();
         }
+
+        [Fact]
+        public void CanCallData()
+        {
+            // Act
+            var actionResult = this.controller.Data();
+        }
     }
 }

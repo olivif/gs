@@ -27,7 +27,7 @@ namespace GoalSetter.Controllers
         {
             this.userManager = userManager;
         }
-        
+
         /// <summary>
         /// Index
         /// </summary>
