@@ -6,6 +6,7 @@ namespace GoalSetter.Controllers
 {
     using System;
     using System.Threading.Tasks;
+    using Data;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -19,13 +20,19 @@ namespace GoalSetter.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
 
+        private readonly GoalsDbContext goalsDbContext;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// </summary>
         /// <param name="userManager">User manager</param>
-        public HomeController(UserManager<ApplicationUser> userManager)
+        /// <param name="goalsDbContext">Goals database context</param>
+        public HomeController(
+            UserManager<ApplicationUser> userManager,
+            GoalsDbContext goalsDbContext)
         {
             this.userManager = userManager;
+            this.goalsDbContext = goalsDbContext;
         }
 
         /// <summary>
@@ -71,7 +78,10 @@ namespace GoalSetter.Controllers
             model.UserId = userIdGuid;
             model.GoalId = Guid.NewGuid();
 
-            // save?
+            // Save to db
+            this.goalsDbContext.Goals.Add(model);
+            this.goalsDbContext.SaveChanges();
+
             return this.View();
         }
     }
