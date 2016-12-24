@@ -15,6 +15,14 @@ namespace GoalSetter.Data
         /// <summary>
         /// Initializes a new instance of the <see cref="GoalsDbContext"/> class.
         /// </summary>
+        public GoalsDbContext()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GoalsDbContext"/> class.
+        /// </summary>
         /// <param name="options">Db context options</param>
         public GoalsDbContext(DbContextOptions<GoalsDbContext> options)
             : base(options)
@@ -24,7 +32,7 @@ namespace GoalSetter.Data
         /// <summary>
         /// Gets or sets the goals
         /// </summary>
-        public DbSet<Goal> Goals { get; set; }
+        public virtual DbSet<Goal> Goals { get; set; }
 
         /// <summary>
         /// OnModelCreating

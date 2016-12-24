@@ -6,6 +6,7 @@ namespace GoalSetter.Service.Storage
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Data;
     using GoalSetter.ModelsLogic;
 
@@ -43,7 +44,8 @@ namespace GoalSetter.Service.Storage
                 goals.Add(goal);
             }
 
-            return goals;
+            // Todo - do this in the database layer
+            return goals.Where(x => x.UserId == userId).ToList();
         }
     }
 }
