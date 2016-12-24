@@ -28,14 +28,9 @@ namespace GoalSetter.Service.GoalManager
         /// <inheritdoc />
         public bool Create(Goal goal)
         {
-            var resultGoal = this.storage.Create(goal);
+            this.storage.Create(goal);
 
-            if (resultGoal != null)
-            {
-                return true;
-            }
-
-            return false;
+            return true;
         }
 
         /// <inheritdoc />

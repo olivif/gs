@@ -27,12 +27,10 @@ namespace GoalSetter.Service.Storage
         }
 
         /// <inheritdoc />
-        public Goal Create(Goal goal)
+        public void Create(Goal goal)
         {
             var addedGoal = this.dbContext.Goals.Add(goal);
             this.dbContext.SaveChanges();
-
-            return addedGoal.Entity;
         }
 
         /// <inheritdoc />

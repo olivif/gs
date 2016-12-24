@@ -18,8 +18,7 @@ namespace GoalSetter.Service.Storage
         /// Create a goal
         /// </summary>
         /// <param name="goal">The goal to be created</param>
-        /// <returns>The goal created</returns>
-        Goal Create(Goal goal);
+        void Create(Goal goal);
 
         /// <summary>
         /// Reads all goals for a given user id

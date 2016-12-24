@@ -5,6 +5,7 @@
     using System.Linq;
     using GoalSetter.Data;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using ModelsLogic;
     using Moq;
     using Storage;
@@ -45,6 +46,28 @@
 
             // Assert
             Assert.Equal(2, returnedGoals.Count);
+        }
+
+        [Fact]
+        public void Create()
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+            var notUserId = Guid.NewGuid();
+            var goal = new Goal() { UserId = userId };
+            var goals = new List<Goal>();
+
+            var dbSetMock = AsMockDbSet(goals);
+            this.dbContextMock.SetupGet(x => x.Goals).Returns(dbSetMock.Object);
+
+            dbSetMock.Setup(d => d.Add(It.IsAny<Goal>())).Callback<Goal>((s) => goals.Add(s));
+
+            // Act
+            this.dataStorage.Create(goal);
+
+            // Assert
+            dbSetMock.Verify(x => x.Add(goal), Times.Once);
+            this.dbContextMock.Verify(x => x.SaveChanges(), Times.Once);
         }
 
         private static Mock<DbSet<T>> AsMockDbSet<T>(IEnumerable<T> data, bool callBase = true) where T : class
