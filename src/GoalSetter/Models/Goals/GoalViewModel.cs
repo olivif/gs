@@ -1,4 +1,4 @@
-﻿// <copyright file="Goal.cs" company="olivif">
+﻿// <copyright file="GoalViewModel.cs" company="olivif">
 // Copyright (c) olivif 2016
 // </copyright>
 
@@ -9,7 +9,7 @@ namespace GoalSetter.Models.Goals
     /// <summary>
     /// Goal data model
     /// </summary>
-    public class Goal
+    public class GoalViewModel
     {
         /// <summary>
         /// Gets or sets the user id
