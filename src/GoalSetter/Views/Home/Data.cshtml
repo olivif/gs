@@ -1,0 +1,17 @@
+﻿@using GoalSetter.Models.Goals
+@model GoalViewModel
+    
+@{
+    ViewData["Title"] = "Home Page / Data";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <p>Data</p>
+
+        <form asp-controller="Home" asp-action="Data" method="post">
+            Data:  <input asp-for="Data" /> <br />
+            <button type="submit">Add goal</button>
+        </form>
+    </div>
+</div>
