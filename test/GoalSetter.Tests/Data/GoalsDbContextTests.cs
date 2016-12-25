@@ -1,7 +1,7 @@
 ﻿namespace GoalSetter.Data
 {
     using Microsoft.EntityFrameworkCore;
-    using Models.Goals;
+    using ModelsLogic;
     using Xunit;
 
     public class GoalsDbContextTests
@@ -31,7 +31,7 @@
             var goalsDbSet = this.dbContext.Goals;
 
             // Assert
-            Assert.True(goalsDbSet is DbSet<GoalViewModel>);
+            Assert.True(goalsDbSet is DbSet<Goal>);
         }
     }
 }

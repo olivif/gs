@@ -5,13 +5,21 @@
 namespace GoalSetter.Data
 {
     using Microsoft.EntityFrameworkCore;
-    using Models.Goals;
+    using ModelsLogic;
 
     /// <summary>
     /// Database context for goals data
     /// </summary>
-    public class GoalsDbContext : DbContext
+    public class GoalsDbContext : DbContext, IDbContext
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GoalsDbContext"/> class.
+        /// </summary>
+        public GoalsDbContext()
+            : base()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GoalsDbContext"/> class.
         /// </summary>
@@ -24,7 +32,7 @@ namespace GoalSetter.Data
         /// <summary>
         /// Gets or sets the goals
         /// </summary>
-        public DbSet<GoalViewModel> Goals { get; set; }
+        public virtual DbSet<Goal> Goals { get; set; }
 
         /// <summary>
         /// OnModelCreating
@@ -34,7 +42,7 @@ namespace GoalSetter.Data
         {
             base.OnModelCreating(builder);
             builder
-                .Entity<GoalViewModel>()
+                .Entity<Goal>()
                 .HasKey(g => new { g.UserId, g.GoalId });
         }
     }
