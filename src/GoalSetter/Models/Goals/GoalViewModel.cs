@@ -12,16 +12,6 @@ namespace GoalSetter.Models.Goals
     public class GoalViewModel
     {
         /// <summary>
-        /// Gets or sets the user id
-        /// </summary>
-        public Guid UserId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user id
-        /// </summary>
-        public Guid GoalId { get; set; }
-
-        /// <summary>
         /// Gets or sets the goal data
         /// </summary>
         public string Data { get; set; }

@@ -75,6 +75,7 @@ namespace GoalSetter.Controllers
         /// <param name="model">The goal view model</param>
         /// <returns>The action result</returns>
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public IActionResult Data(GoalViewModel model)
         {
