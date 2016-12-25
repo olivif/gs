@@ -11,7 +11,6 @@ namespace GoalSetter.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Logging;
 
     using Models;
     using Models.AccountViewModels;
@@ -75,19 +74,9 @@ namespace GoalSetter.Controllers
                     isPersistent: false,
                     lockoutOnFailure: false);
 
-                if (result.Succeeded)
+                if (result != null && result.Succeeded)
                 {
                     return this.RedirectToLocal(returnUrl);
-                }
-
-                if (result.IsLockedOut)
-                {
-                    return this.View("Lockout");
-                }
-                else
-                {
-                    this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return this.View(model);
                 }
             }
 
@@ -161,19 +150,12 @@ namespace GoalSetter.Controllers
                 return this.RedirectToLocal(returnUrl);
             }
 
-            if (result.IsLockedOut)
-            {
-                return this.View("Lockout");
-            }
-            else
-            {
-                // If the user does not have an account, then ask the user to create an account.
-                this.ViewData["ReturnUrl"] = returnUrl;
-                this.ViewData["LoginProvider"] = info.LoginProvider;
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            // If the user does not have an account, then ask the user to create an account.
+            this.ViewData["ReturnUrl"] = returnUrl;
+            this.ViewData["LoginProvider"] = info.LoginProvider;
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
 
-                return this.View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
-            }
+            return this.View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
         }
 
         /// <summary>
