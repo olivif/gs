@@ -45,6 +45,7 @@
             new TheoryData<LoginViewModel, string, SignInResult>()
         {
             { new LoginViewModel(), "/localUrl", SignInResult.Success },
+            { new LoginViewModel(), "https://google.com/notlocalUrl", SignInResult.Success },
         };
 
         public AccountControllerTests()

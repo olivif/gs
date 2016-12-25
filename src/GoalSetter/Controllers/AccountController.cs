@@ -128,34 +128,29 @@ namespace GoalSetter.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
-            if (remoteError != null)
+            if (remoteError == null)
             {
-                this.ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+                var info = await this.signInManager.GetExternalLoginInfoAsync();
 
-                return this.View(nameof(this.Login));
+                if (info == null)
+                {
+                    return this.RedirectToAction(nameof(this.Login));
+                }
+
+                // Sign in the user with this external login provider if the user already has a login.
+                var result = await this.signInManager.ExternalLoginSignInAsync(
+                    info.LoginProvider,
+                    info.ProviderKey,
+                    isPersistent: false);
+
+                if (result.Succeeded)
+                {
+                    return this.RedirectToLocal(returnUrl);
+                }
             }
 
-            var info = await this.signInManager.GetExternalLoginInfoAsync();
-
-            if (info == null)
-            {
-                return this.RedirectToAction(nameof(this.Login));
-            }
-
-            // Sign in the user with this external login provider if the user already has a login.
-            var result = await this.signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
-
-            if (result.Succeeded)
-            {
-                return this.RedirectToLocal(returnUrl);
-            }
-
-            // If the user does not have an account, then ask the user to create an account.
-            this.ViewData["ReturnUrl"] = returnUrl;
-            this.ViewData["LoginProvider"] = info.LoginProvider;
-            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-
-            return this.View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+            // If we got this far, something failed
+            throw new InvalidOperationException();
         }
 
         /// <summary>
@@ -196,20 +191,10 @@ namespace GoalSetter.Controllers
                         return this.RedirectToLocal(returnUrl);
                     }
                 }
-
-                this.AddErrors(result);
             }
 
-            this.ViewData["ReturnUrl"] = returnUrl;
-            return this.View(model);
-        }
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                this.ModelState.AddModelError(string.Empty, error.Description);
-            }
+            // If we got this far, something failed
+            throw new InvalidOperationException();
         }
 
         private IActionResult RedirectToLocal(string returnUrl)
