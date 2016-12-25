@@ -128,7 +128,7 @@ namespace GoalSetter.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
-            if (remoteError == null)
+            if (returnUrl != null && remoteError == null)
             {
                 var info = await this.signInManager.GetExternalLoginInfoAsync();
 
@@ -143,7 +143,7 @@ namespace GoalSetter.Controllers
                     info.ProviderKey,
                     isPersistent: false);
 
-                if (result.Succeeded)
+                if (result != null && result.Succeeded)
                 {
                     return this.RedirectToLocal(returnUrl);
                 }
@@ -181,11 +181,11 @@ namespace GoalSetter.Controllers
 
                 var result = await this.userManager.CreateAsync(user);
 
-                if (result.Succeeded)
+                if (result != null && result.Succeeded)
                 {
                     result = await this.userManager.AddLoginAsync(user, info);
 
-                    if (result.Succeeded)
+                    if (result != null && result.Succeeded)
                     {
                         await this.signInManager.SignInAsync(user, isPersistent: false);
                         return this.RedirectToLocal(returnUrl);
