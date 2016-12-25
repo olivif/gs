@@ -64,6 +64,27 @@
             { "url", SignInResult.Success },
         };
 
+        public static TheoryData<ExternalLoginConfirmationViewModel, string> ExternalLoginConfirmationData =
+            new TheoryData<ExternalLoginConfirmationViewModel, string>()
+        {
+            { new ExternalLoginConfirmationViewModel(), "url" },
+            { new ExternalLoginConfirmationViewModel(), "url" },
+            { new ExternalLoginConfirmationViewModel(), "url" },
+            { new ExternalLoginConfirmationViewModel(), "url" },
+        };
+
+        public static TheoryData<ExternalLoginConfirmationViewModel, string, IdentityResult> ExternalLoginConfirmationDataFailed =
+            new TheoryData<ExternalLoginConfirmationViewModel, string, IdentityResult>()
+        {
+            { new ExternalLoginConfirmationViewModel(), "url", null },
+        };
+
+        public static TheoryData<ExternalLoginConfirmationViewModel, string, IdentityResult> ExternalLoginConfirmationDataSuccess =
+            new TheoryData<ExternalLoginConfirmationViewModel, string, IdentityResult>()
+        {
+            { new ExternalLoginConfirmationViewModel(), "url", IdentityResult.Success },
+        };
+
         public AccountControllerTests()
         {
             this.userManagerMock = IdentityTestUtils.MockUserManager<ApplicationUser>();
@@ -72,6 +93,8 @@
             this.controller = new AccountController(
                 this.userManagerMock.Object,
                 this.signInManagerMock.Object);
+
+            this.controller.Url = this.CreateMockUrlHelper();
         }
 
         [Fact]
@@ -140,8 +163,6 @@
                 .Setup(x => x.PasswordSignInAsync(model.Email, model.Password, false, false))
                 .Returns(Task.FromResult(signInResult));
 
-            this.controller.Url = this.CreateMockUrlHelper();
-
             // Act
             var task = controller.Login(model, returnUrl);
             var result = task.Result;
@@ -161,9 +182,6 @@
         //[InlineData("provider", "someUrl")]
         public void ExternalLoginCallsConfigureExternalAuthenticationProperties(string provider, string returnUrl)
         {
-            // Arrange
-            this.controller.Url = this.CreateMockUrlHelper();
-
             // Act
             var actionResult = controller.ExternalLogin(provider, returnUrl);
 
@@ -299,10 +317,208 @@
                     false))
                 .Returns(Task.FromResult(signInResult));
 
-            this.controller.Url = this.CreateMockUrlHelper();
-
             // Act
             var task = controller.ExternalLoginCallback(returnUrl, remoteError).Result;
+        }
+
+        [Theory]
+        [MemberData(nameof(ExternalLoginConfirmationData))]
+        public void ExternalLoginConfirmationCallsGetExternalLoginInfoAsync(ExternalLoginConfirmationViewModel model, string returnUrl)
+        {
+            // Arrange
+            var task = this.controller.ExternalLoginConfirmation(model, returnUrl);
+
+            // Act
+            var result = task.Result;
+
+            // Assert
+            this.signInManagerMock.Verify(x => x.GetExternalLoginInfoAsync(null), Times.Once);
+        }
+
+        [Theory]
+        [MemberData(nameof(ExternalLoginConfirmationData))]
+        public void ExternalLoginConfirmationReturnsOnNullInfo(ExternalLoginConfirmationViewModel model, string returnUrl)
+        {
+            // Arrange
+            this.signInManagerMock
+                .Setup(x => x.GetExternalLoginInfoAsync(null))
+                .Returns(Task.FromResult((ExternalLoginInfo)null));
+
+            var task = this.controller.ExternalLoginConfirmation(model, returnUrl);
+
+            // Act
+            var result = task.Result;
+        }
+
+        [Theory]
+        [MemberData(nameof(ExternalLoginConfirmationDataFailed))]
+        public void ExternalLoginConfirmationCallsCreateAsync(
+            ExternalLoginConfirmationViewModel model, 
+            string returnUrl, 
+            IdentityResult identityResult)
+        {
+            // Arrange
+            var externalLoginInfo = this.CreateFakeLoginData();
+
+            this.signInManagerMock
+                .Setup(x => x.GetExternalLoginInfoAsync(null))
+                .Returns(Task.FromResult(externalLoginInfo));
+
+            var user = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email
+            };
+
+            this.userManagerMock
+                .Setup(x => x.CreateAsync(user))
+                .Returns(Task.FromResult(identityResult));
+
+            Func<Task> task = () => controller.ExternalLoginConfirmation(model, returnUrl);
+
+            // Act
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(task);
+
+            // Assert
+            Assert.NotNull(ex);
+
+            this.userManagerMock
+                .Verify(x => x.CreateAsync(It.Is<ApplicationUser>(u => 
+                    u.Email == model.Email && 
+                    u.UserName == model.Email)), Times.Once);
+        }
+
+        [Theory]
+        [MemberData(nameof(ExternalLoginConfirmationDataSuccess))]
+        public void ExternalLoginConfirmationCallsCreateAsyncSuccess(
+            ExternalLoginConfirmationViewModel model,
+            string returnUrl,
+            IdentityResult identityResult)
+        {
+            // Arrange
+            var externalLoginInfo = this.CreateFakeLoginData();
+
+            this.signInManagerMock
+                .Setup(x => x.GetExternalLoginInfoAsync(null))
+                .Returns(Task.FromResult(externalLoginInfo));
+
+            var user = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email
+            };
+
+            this.userManagerMock
+                .Setup(x => x.CreateAsync(It.IsAny<ApplicationUser>()))
+                .Returns(Task.FromResult(identityResult));
+
+            Func<Task> task = () => controller.ExternalLoginConfirmation(model, returnUrl);
+
+            // Act
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(task);
+
+            // Assert
+            Assert.NotNull(ex);
+
+            this.userManagerMock
+                .Verify(x => x.AddLoginAsync(
+                    It.Is<ApplicationUser>(u =>
+                        u.Email == model.Email &&
+                        u.UserName == model.Email),
+                    It.Is<ExternalLoginInfo>(u =>
+                        u.LoginProvider == externalLoginInfo.LoginProvider &&
+                        u.ProviderKey == externalLoginInfo.ProviderKey &&
+                        u.ProviderDisplayName == externalLoginInfo.ProviderDisplayName)),
+                    Times.Once);
+        }
+
+        [Theory]
+        [MemberData(nameof(ExternalLoginConfirmationDataSuccess))]
+        public void ExternalLoginConfirmationSuccessCallsSignInAsync(
+            ExternalLoginConfirmationViewModel model,
+            string returnUrl,
+            IdentityResult identityResult)
+        {
+            // Arrange
+            var externalLoginInfo = this.CreateFakeLoginData();
+
+            this.signInManagerMock
+                .Setup(x => x.GetExternalLoginInfoAsync(null))
+                .Returns(Task.FromResult(externalLoginInfo));
+
+            var user = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email
+            };
+
+            this.userManagerMock
+                .Setup(x => x.CreateAsync(It.IsAny<ApplicationUser>()))
+                .Returns(Task.FromResult(identityResult));
+
+            this.userManagerMock
+                .Setup(x => x.AddLoginAsync(
+                    It.IsAny<ApplicationUser>(),
+                    It.IsAny<ExternalLoginInfo>()))
+                .Returns(Task.FromResult(identityResult));
+
+            Func<Task> task = () => controller.ExternalLoginConfirmation(model, returnUrl);
+
+            // Act
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(task);
+
+            // Assert
+            Assert.NotNull(ex);
+
+            this.signInManagerMock
+                .Verify(x => x.SignInAsync(
+                        It.IsAny<ApplicationUser>(), 
+                        false,
+                        null),
+                    Times.Once);
+        }
+
+        [Theory]
+        [MemberData(nameof(ExternalLoginConfirmationDataSuccess))]
+        public void ExternalLoginConfirmationSuccess(
+            ExternalLoginConfirmationViewModel model,
+            string returnUrl,
+            IdentityResult identityResult)
+        {
+            // Arrange
+            var externalLoginInfo = this.CreateFakeLoginData();
+
+            this.signInManagerMock
+                .Setup(x => x.GetExternalLoginInfoAsync(null))
+                .Returns(Task.FromResult(externalLoginInfo));
+
+            var user = new ApplicationUser
+            {
+                UserName = model.Email,
+                Email = model.Email
+            };
+
+            this.userManagerMock
+                .Setup(x => x.CreateAsync(It.IsAny<ApplicationUser>()))
+                .Returns(Task.FromResult(identityResult));
+
+            this.userManagerMock
+                .Setup(x => x.AddLoginAsync(
+                    It.IsAny<ApplicationUser>(),
+                    It.IsAny<ExternalLoginInfo>()))
+                .Returns(Task.FromResult(identityResult));
+
+            this.signInManagerMock
+                .Setup(x => x.SignInAsync(
+                        It.IsAny<ApplicationUser>(),
+                        false,
+                        null))
+                .Returns(Task.FromResult(identityResult));
+
+            var task = this.controller.ExternalLoginConfirmation(model, returnUrl);
+
+            // Act
+            var result = task.Result;
         }
 
         private IUrlHelper CreateMockUrlHelper()

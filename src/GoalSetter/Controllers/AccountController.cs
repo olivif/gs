@@ -181,7 +181,7 @@ namespace GoalSetter.Controllers
 
                 var result = await this.userManager.CreateAsync(user);
 
-                if (result.Succeeded)
+                if (result != null && result.Succeeded)
                 {
                     result = await this.userManager.AddLoginAsync(user, info);
 
