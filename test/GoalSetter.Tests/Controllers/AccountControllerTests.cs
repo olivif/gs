@@ -371,7 +371,7 @@
             };
 
             this.userManagerMock
-                .Setup(x => x.CreateAsync(user))
+                .Setup(x => x.CreateAsync(It.IsAny<ApplicationUser>()))
                 .Returns(Task.FromResult(identityResult));
 
             Func<Task> task = () => controller.ExternalLoginConfirmation(model, returnUrl);

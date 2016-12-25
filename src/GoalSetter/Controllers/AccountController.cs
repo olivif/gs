@@ -185,7 +185,7 @@ namespace GoalSetter.Controllers
                 {
                     result = await this.userManager.AddLoginAsync(user, info);
 
-                    if (result.Succeeded)
+                    if (result != null && result.Succeeded)
                     {
                         await this.signInManager.SignInAsync(user, isPersistent: false);
                         return this.RedirectToLocal(returnUrl);
